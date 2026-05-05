@@ -23,5 +23,24 @@ pipeline{
         stage("Build"){
             steps{
                 script{
-                    docker_build("notes-app","latest",
+                 //pulling image direct from dockerhub
+                    build("notes-app","latest","tarungaur")
+                }
+            }
+        }
+        stage("Push to DockerHub"){
+            steps{
+                script{
+                    dockerpush("notes-app","latest","tarungaur")
+                }
+            }
+        }
+        stage ("Deploy"){
+            steps{
+                echo " the code is being deployed " 
+                sh " docker compose up -d " 
+            }
+        }
+    }
+}
         
